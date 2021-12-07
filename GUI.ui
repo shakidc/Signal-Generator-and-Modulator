@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1283</width>
+    <height>921</height>
+   </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>Signal Modulator &amp; Generator</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(8, 8, 8);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(8, 8, 8);</string>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>98</y>
+      <width>386</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="bottomMargin">
+        <number>15</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+background-color: rgb(15, 15, 15);
+font: 75 12pt &quot;Segoe UI&quot; bold;</string>
+         </property>
+         <property name="text">
+          <string>METHOD</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="ASK">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(18, 18, 18);</string>
+         </property>
+         <property name="text">
+          <string>ASK </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="PSK">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(18, 18, 18);</string>
+         </property>
+         <property name="text">
+          <string>PSK</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="FSK">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(18, 18, 18);</string>
+         </property>
+         <property name="text">
+          <string>FSK</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QCheckBox" name="MODULATE">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(20, 20, 20);</string>
+           </property>
+           <property name="text">
+            <string>MODULATE</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_2">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(20, 20, 20);</string>
+           </property>
+           <property name="text">
+            <string>DEMODULATE</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(23, 23, 23);</string>
+         </property>
+         <property name="text">
+          <string>AMPLITUDE       </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="AMPLITUDE">
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Seven Segment&quot;;
+color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="maximum">
+          <double>1000000000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(25, 25, 25);</string>
+         </property>
+         <property name="text">
+          <string>FREQUENCY 1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="FC1">
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Seven Segment&quot;;
+color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="maximum">
+          <double>1000000000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(28, 28, 28);</string>
+         </property>
+         <property name="text">
+          <string>FREQUENCY 2</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="FC2">
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Seven Segment&quot;;
+color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="maximum">
+          <double>1000000000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(33, 33, 33);</string>
+         </property>
+         <property name="text">
+          <string>DATA</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(35, 35, 35);</string>
+           </property>
+           <property name="text">
+            <string>IN</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="DATA">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 255, 0);
+font: 75 10pt &quot;Segoe UI&quot; bold;</string>
+           </property>
+           <property name="plainText">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(168, 168, 168);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+background-color: rgb(35, 35, 35);</string>
+           </property>
+           <property name="text">
+            <string>OUT</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEdit">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 255, 0);
+font: 75 10pt &quot;Segoe UI&quot; bold;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PROCESS">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(175, 175, 175);
+font: 75 12pt &quot;Segoe UI&quot; bold;
+border-radius: 20px;
+background-color: rgb(40, 40, 40);
+height: 50%;</string>
+       </property>
+       <property name="text">
+        <string>PROCESS!</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGraphicsView" name="GRAPH">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>100</y>
+      <width>861</width>
+      <height>791</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TITLE">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>20</y>
+      <width>851</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 87 28pt &quot;Segoe UI Black&quot;;
+color: rgb(244, 244, 244);</string>
+    </property>
+    <property name="text">
+     <string>SIGNAL GENERATOR &amp; MODULATOR</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>870</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 255, 0);
+font: 75 8pt &quot;Times New Roman&quot;;</string>
+    </property>
+    <property name="text">
+     <string>©ShakiDC 2021</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
