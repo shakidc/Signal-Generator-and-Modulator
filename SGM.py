@@ -16,8 +16,7 @@
 
 import pyqtgraph as pg
 from PyQt5 import QtCore, QtGui, QtWidgets
-from numpy import arange
-from math import sin,pi
+from numpy import array,linspace,zeros,sin,pi,flip,concatenate
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -230,39 +229,40 @@ class Ui_MainWindow(object):
         a = self.AMPLITUDE.value()
         fc0 = self.FC1.value()
         fc1 = self.FC2.value()
-        t = arange(bb,ba+(ba/(100*fc0)),ba/(100*fc0)).tolist()
+        t = linspace(bb,ba,100*fc0)
+        d0 = list(zeros((len(t),), dtype=float))
+        d1 = a*sin(2*pi*fc0*t)
+        d1f = flip(a*sin(2*pi*fc0*t))
+        d2 = a*sin(2*pi*fc1*t)
         d = eval(self.DATA.toPlainText())
 
         if self.ASK.isChecked():
     
             if self.MODULATE.isChecked():
-                tA = []
-                dmA = []
+                dmA = array([])
+                tA = array([])
                 for i in range(0,len(d)):
-                    for k in range(0,len(t)):
-                        tA.append(t[k]+i)
+                    tA = concatenate((tA,t+i))
                     if d[i] == 0: #add 0 values to modulated data list
-                        for j in range(0,len(t)):
-                            dmA.append(0)
+                        dmA = concatenate((dmA,d0))
                     elif d[i] == 1: #add a sine wave values with defined frequency to modulated data list
-                        for j in range(0,len(t)):
-                            dmA.append(a*sin(2*pi*fc0*t[j]))
+                        dmA = concatenate((dmA,d1))
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tA,dmA,pen=pen)
-                self.DOUT.setPlainText(str(dmA))
+                self.DOUT.setPlainText(str(dmA.tolist()))
             
             elif self.DEMODULATE.isChecked():
                 ddA = []
                 tdA = []
                 for i in range(0,int(len(d)/len(t))):
                     tdA.append(i+1)
-                    if d[i*len(t)+1] == a*sin(2*pi*fc0*t[1]):
+                    if d[i*len(t)+1] == d1[1]:
                         ddA.append(1)
                     else:
                         ddA.append(0)
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tdA,ddA,pen=pend,symbol='o', symbolSize=30, symbolBrush=('g'))
-                self.DOUT.setPlainText(str(ddA))
+                self.DOUT.setPlainText(str(list(ddA)))
             
             else:
                 pass
@@ -270,27 +270,25 @@ class Ui_MainWindow(object):
         elif self.PSK.isChecked():
             
             if self.MODULATE.isChecked():
-                tP = []
-                dmP = []
+                tP = t
+                dmP = array([])
                 for i in range(0,len(d)):
-                    for k in range(0,len(t)):
-                        tP.append(t[k]+i)
+                    if i > 0:
+                        tP = concatenate((tP,t+i))
                     if d[i] == 0: #add 0 values to modulated data list
-                        for j in range(0,len(t)):
-                            dmP.append(a*sin(2*pi*fc0*t[-(j+1)]))
+                        dmP = concatenate((dmP,d1f))
                     elif d[i] == 1: #add a sine wave values with defined frequency to modulated data list
-                        for j in range(0,len(t)):
-                            dmP.append(a*sin(2*pi*fc0*t[j]))
+                        dmP = concatenate((dmP,d1))
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tP,dmP,pen=pen)
-                self.DOUT.setPlainText(str(dmP))
+                self.DOUT.setPlainText(str(dmP.tolist()))
             
             elif self.DEMODULATE.isChecked():
                 ddP = []
                 tdP = []
                 for i in range(0,int(len(d)/len(t))):
                     tdP.append(i+1)
-                    if d[i*len(t)+1] == a*sin(2*pi*fc0*t[1]):
+                    if d[i*len(t)+1] == d1[1]:
                         ddP.append(1)
                     else:
                         ddP.append(0)
@@ -302,35 +300,28 @@ class Ui_MainWindow(object):
                 pass
         
         elif self.FSK.isChecked():
-            if fc0 < fc1:
-                t = arange(bb,ba+(ba/(100*fc1)),ba/(100*fc1)).tolist()
-            else:
-                t = arange(bb,ba+(ba/(100*fc0)),ba/(100*fc0)).tolist()
 
             if self.MODULATE.isChecked():
-                tF = []
-                dmF = []
+                dmF = array([])
+                tF = array([])
                 for i in range(0,len(d)):
-                    for k in range(0,len(t)):
-                        tF.append(t[k]+i)
+                    tF = concatenate((tF,t+i))
                     if d[i] == 0:
-                        for j in range(0,len(t)):   #add a sine wave values with defined frequency (fc0) to modulated data list
-                            dmF.append(a*sin(2*pi*fc0*t[j]))
+                        dmF = concatenate((dmF,d1))
                     elif d[i] == 1:
-                        for j in range(0,len(t)):   #add a sine wave values with defined frequency (fc1) to modulated data list
-                            dmF.append(a*sin(2*pi*fc1*t[j]))
+                        dmF = concatenate((dmF,d2))
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tF,dmF,pen=pen)
-                self.DOUT.setPlainText(str(dmF))
+                self.DOUT.setPlainText(str(dmF.tolist()))
             
             elif self.DEMODULATE.isChecked():
                 tdF = []
                 ddF = []
                 for i in range(0,int(len(d)/len(t))):
                     tdF.append(i+1)
-                    if d[i*len(t)+1] == a*sin(2*pi*fc0*t[1]):
+                    if d[i*len(t)+1] == d1[1]:
                         ddF.append(0)
-                    elif d[i*len(t)+1] == a*sin(2*pi*fc1*t[1]):
+                    elif d[i*len(t)+1] == d2[1]:
                         ddF.append(1)
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tdF,ddF,pen=pend,symbol='o', symbolSize=30, symbolBrush=('g'))
