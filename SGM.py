@@ -1,4 +1,4 @@
-#SGM.py
+#SGM.py v1.1
 #A simple program to generate, modulate, and demodulate data signal using ASK, PSK, or FSK method
 #usage: python SGM.py
 #for educational purpose
@@ -12,11 +12,13 @@
 #input the required parameters
 #frequencies should be given in Hz unit
 #data list should be given in list format. ex: [1,0,1,0,0,0,1,1]
-#Shaki S. Putra|05-11-21
+#additional feature: generate tone
+#Shaki S. Putra|21-12-21
 
 import pyqtgraph as pg
 from PyQt5 import QtCore, QtGui, QtWidgets
-from numpy import array,linspace,zeros,sin,pi,flip,concatenate
+from numpy import array,linspace,zeros,sin,pi,flip,concatenate,int8
+from pyaudio import PyAudio
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -226,6 +228,15 @@ class Ui_MainWindow(object):
 
         bb = 0
         ba = 1
+        BITRATE = 96000.
+        pyaudio = PyAudio()
+        stream = pyaudio.open(
+                format=pyaudio.get_format_from_width(1),
+                channels=1,
+                rate=int(BITRATE),
+                output=True)
+        points = int(BITRATE)
+        d = eval(self.DATA.toPlainText())
         a = self.AMPLITUDE.value()
         fc0 = self.FC1.value()
         fc1 = self.FC2.value()
@@ -234,7 +245,12 @@ class Ui_MainWindow(object):
         d1 = a*sin(2*pi*fc0*t)
         d1f = flip(a*sin(2*pi*fc0*t))
         d2 = a*sin(2*pi*fc1*t)
-        d = eval(self.DATA.toPlainText())
+        tgt = linspace(bb, ba, points, endpoint=False)
+        d0gt = zeros((len(tgt),), dtype=int).tostring()
+        d1gt = array((sin(tgt*fc0*2*pi) + 1.0)*a, dtype=int8).tostring()
+        d1fgt = flip(array((sin(tgt*fc0*2*pi) + 1.0)*a, dtype=int8)).tostring()
+        d2gt = array((sin(tgt*fc1*2*pi) + 1.0)*a, dtype=int8).tostring()
+        
 
         if self.ASK.isChecked():
     
@@ -245,12 +261,14 @@ class Ui_MainWindow(object):
                     tA = concatenate((tA,t+i))
                     if d[i] == 0: #add 0 values to modulated data list
                         dmA = concatenate((dmA,d0))
+                        stream.write(d0gt)
                     elif d[i] == 1: #add a sine wave values with defined frequency to modulated data list
                         dmA = concatenate((dmA,d1))
+                        stream.write(d1gt)
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tA,dmA,pen=pen)
                 self.DOUT.setPlainText(str(dmA.tolist()))
-            
+                        
             elif self.DEMODULATE.isChecked():
                 ddA = []
                 tdA = []
@@ -277,8 +295,10 @@ class Ui_MainWindow(object):
                         tP = concatenate((tP,t+i))
                     if d[i] == 0: #add 0 values to modulated data list
                         dmP = concatenate((dmP,d1f))
+                        stream.write(d1fgt)
                     elif d[i] == 1: #add a sine wave values with defined frequency to modulated data list
                         dmP = concatenate((dmP,d1))
+                        stream.write(d1gt)
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tP,dmP,pen=pen)
                 self.DOUT.setPlainText(str(dmP.tolist()))
@@ -308,8 +328,10 @@ class Ui_MainWindow(object):
                     tF = concatenate((tF,t+i))
                     if d[i] == 0:
                         dmF = concatenate((dmF,d1))
+                        stream.write(d1gt)
                     elif d[i] == 1:
                         dmF = concatenate((dmF,d2))
+                        stream.write(d2gt)
                 self.GRAPH.showGrid(x=True, y=True)
                 self.GRAPH.plot(tF,dmF,pen=pen)
                 self.DOUT.setPlainText(str(dmF.tolist()))
@@ -335,7 +357,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Signal Modulator & Generator"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Signal Modulator & Generator v1.1"))
         self.label.setText(_translate("MainWindow", "METHOD"))
         self.ASK.setText(_translate("MainWindow", "ASK "))
         self.PSK.setText(_translate("MainWindow", "PSK"))
